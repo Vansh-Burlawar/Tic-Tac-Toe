@@ -7,10 +7,13 @@ return <button className='square' onClick={onsquareClick}>{value}</button>
 }
 
 export default function Board(){
-  const [xIsNext, setIsNext] = useState(true);
+  const [xIsNext, setXIsNext] = useState(true);
   const[square ,setSquare] = useState(Array(9).fill(null));
 
   function handleClick(i){
+    if(square[i] || Combinations(square)){
+      return;
+    }
     const nextSquare = square.slice();
     if(xIsNext){
       nextSquare[i]="X";
@@ -20,6 +23,14 @@ export default function Board(){
     
     setSquare(nextSquare);
     setXIsNext(!xIsNext);
+  }
+
+  const winner = CalculateWinner(square);
+  let status;
+  if(winner){
+    status = "Winner " + winner + "Player";
+  }else{
+     status = "Next Player" +( xIsNext ? 'X':'O');
   }
   return(
     <>
@@ -40,4 +51,19 @@ export default function Board(){
   </div>
   </>
   );
+}
+
+function Combinations(square){
+  const combo =[
+    [0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]
+
+  ];
+
+  for(let i=0; i<combo.length;i++){
+    const[a,b,c] = combo[i];
+    if(square[a] && square[a]=== square[b] && square[a]=== square[c]){
+      return square[a];
+    }
+  }
+  return null;
 }
