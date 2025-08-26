@@ -3,7 +3,8 @@ import { useState } from 'react'
 import './App.css'
 
 function Square({value,onsquareClick}){
-return <button className='square' onClick={onsquareClick}>{value}</button>
+return (<button className='square' onClick={onsquareClick}>{value}</button>
+);
 }
 
 export default function Board(){
@@ -25,15 +26,16 @@ export default function Board(){
     setXIsNext(!xIsNext);
   }
 
-  const winner = CalculateWinner(square);
+  const winner =Combinations(square);
   let status;
   if(winner){
     status = "Winner " + winner + "Player";
   }else{
-     status = "Next Player" +( xIsNext ? 'X':'O');
+     status = "Next Player" +( xIsNext ? "X":"O");
   }
   return(
     <>
+    <div className='status'> {status}</div>
     <div className='board-row'>
   <Square value={square[0]} onsquareClick={() =>handleClick(0)} />
   <Square value={square[1]} onsquareClick={() =>handleClick(1)} />
