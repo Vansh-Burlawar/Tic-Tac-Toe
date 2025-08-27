@@ -9,8 +9,28 @@ export default function Game(){
   const currentsquares= history[history.length-1];
 
   function handlePlay(nextSquare){
-
+sethistory([...history,nextSquare])
+setXIsNext(!xIsNext)
   }
+  function jumpTo(nextMove){
+    
+  }
+  const moves = history.map((square,move)=>{
+    let description;
+    if(move>0){
+      description='Go to move '+move
+    }else{
+description='Go to game start'
+    }
+    return( 
+      
+        <li>
+          <button onClick={()=> jumpTo(move)}>  {description}</button>
+        </li>
+      
+      
+    )
+  })
   return(
     <div className='game'>
       <div className='game-board'>
@@ -19,7 +39,7 @@ export default function Game(){
       </div>
       <div className='game-info'>
         <ol>
-
+{moves}
         </ol>
       </div>
     </div>
